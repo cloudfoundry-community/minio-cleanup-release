@@ -1,0 +1,24 @@
+base-directory = "testdata/base-dir"
+schedule = "@weekly"
+
+[[bucket]]
+  name = "baz"
+
+  [[bucket.file]]
+    pattern = "foo-(.*).tgz"
+    retainer = 5
+
+  [[bucket.file]]
+    pattern = "quxx-(.*).tgz"
+    retainer = 5
+
+[[bucket]]
+  name = "fluff"
+
+  [[bucket.file]]
+    pattern = "nerp-(.*).tgz"
+    retainer = 5
+
+  [[bucket.file]]
+    pattern = "flarm-(.*).tgz"
+    retainer = 5
