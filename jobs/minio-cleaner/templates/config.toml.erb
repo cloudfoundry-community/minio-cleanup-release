@@ -1,0 +1,14 @@
+base-directory = "<%= p('base_directory') %>"
+schedule = "<%= p('schedule') %>"
+
+<% if_p("buckets") do |bucket| 
+   bucket.each do |b| %>
+[[bucket]]
+  name = "<%= b[0] %>"
+  <% b[1].each do |f| %>
+  [[bucket.file]]
+    pattern = "<%= f['pattern'] %>"
+    retainer = <%= f['retain'] %>
+  <% end
+  end
+end %>

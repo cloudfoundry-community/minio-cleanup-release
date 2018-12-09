@@ -1,0 +1,5 @@
+check process minio-cleaner
+  with pidfile /var/vcap/sys/run/minio-cleaner/pid
+  start program "/var/vcap/jobs/minio-cleaner/bin/ctl start"
+  stop program "/var/vcap/jobs/minio-cleaner/bin/ctl stop"
+  group vcap

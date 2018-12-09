@@ -1,6 +1,8 @@
 ---
 name: minio-cleaner
 
-dependencies: []
+dependencies:
+- golang-1.11-linux
 
-files: []
+files:
+- cleaner/**/*

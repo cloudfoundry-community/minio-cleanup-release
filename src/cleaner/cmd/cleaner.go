@@ -47,8 +47,9 @@ func Execute(cfg *CleanerConfig, dryRun bool) error {
 
 // ParseConfig will attempt to read the config toml
 func ParseConfig(configFile string) (*CleanerConfig, error) {
-	var conf *CleanerConfig
-	if _, err := toml.DecodeFile(configFile, &conf); err != nil {
+	log.Println("Reading config file", configFile)
+	conf := new(CleanerConfig)
+	if _, err := toml.DecodeFile(configFile, conf); err != nil {
 		return nil, err
 	}
 

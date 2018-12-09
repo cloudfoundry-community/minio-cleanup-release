@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"os"
 
@@ -10,23 +9,19 @@ import (
 	"gopkg.in/alecthomas/kingpin.v2"
 )
 
-// Version will be updated by the build process
-var Version = "0.0.0"
+// Version will be the commit hash where the final release bumps
+var Version = "2bca79219258c09837a3c60c504584f44d72405e"
 
 func main() {
 	log.SetFlags(log.Lshortfile | log.Ldate | log.Ltime | log.LUTC)
+	log.SetOutput(os.Stdout)
 	app := kingpin.New("cleaner", "Cleaner will remove old versions of files in a minio server")
+	app.Version(Version)
 
-	configFile := app.Flag("config-file", "Location of config.toml").Short('c').Default("config.toml").Required().ExistingFile()
+	configFile := app.Flag("config-file", "Location of config.toml").Short('c').Required().ExistingFile()
 	dryRun := app.Flag("dry-run", "If set, will list out files to delete but not actually delete them").Bool()
-	version := app.Flag("version", "Return the version number").Short('v').Bool()
 
-	app.Parse(os.Args[1:])
-
-	if *version {
-		fmt.Printf("Version: %s\n\n", Version)
-		os.Exit(0)
-	}
+	kingpin.MustParse(app.Parse(os.Args[1:]))
 
 	config, err := cmd.ParseConfig(*configFile)
 	if err != nil {

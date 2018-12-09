@@ -1,1 +1,12 @@
-set -e
+set -ex
+
+source /var/vcap/packages/golang-1.11-linux/bosh/compile.env
+
+mkdir $BOSH_INSTALL_TARGET/bin
+export GOCACHE=$PWD/cache
+export GO111MODULE=on
+
+# Must do so it can recognize the main module
+cd cleaner
+
+go build -mod=vendor -o ${BOSH_INSTALL_TARGET}/bin/cleaner main.go

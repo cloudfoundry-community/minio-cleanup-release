@@ -1,8 +1,30 @@
 ---
 name: minio-cleaner
 
-templates: {}
+templates: 
+  ctl.erb: bin/ctl
+  config.toml.erb: config/config.toml
 
-packages: []
+packages: 
+- minio-cleaner
 
-properties: {}
+properties: 
+  base_directory:
+    description: "The base directory that Minio uses"
+    default: "/var/vcap/store/minio-server"
+  
+  schedule:
+    description: "A cron-compliant schedule for when to delete files"
+    example: "@weekly"
+
+  buckets:
+    description: |
+      A list of file patterns in the bucket and how many to keep
+      The patterns must have exactly one capture group representing 
+      the file's version
+    example: |
+      some-bucket:
+      - pattern: stemcell-(.*).tgz
+        retain: 5
+      - pattern: release-(.*).tgz
+        retain: 3
