@@ -8,7 +8,7 @@ This release is designed to be colocated on a BOSH-managed Minio server. It work
 filesystem, and as such, is not designed to work against a remote S3 store.
 
 ```sh
-$ git clone https://github.com/pivotal/minio-cleanup-release
+$ git clone https://github.com/cloudfoundry-community/minio-cleanup-release
 $ cd minio-cleanup-release
 $ bosh upload-release
 ```
