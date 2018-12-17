@@ -10,7 +10,7 @@ import (
 )
 
 // Version will be the commit hash where the final release bumps
-var Version = "89077de988e2bc2d1b4f44ea00068aa034b56912"
+var Version = "238cb0a94cd97c8ef18f60e1549c38ba9051475e"
 
 func main() {
 	log.SetFlags(log.Lshortfile | log.Ldate | log.Ltime | log.LUTC)
