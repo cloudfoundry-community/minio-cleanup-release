@@ -74,6 +74,15 @@ func testCleanerCommand(t *testing.T, when spec.G, it spec.S) {
 							},
 						},
 					},
+					cmd.Bucket{
+						Name: "busted",
+						Files: []cmd.File{
+							cmd.File{
+								Pattern:  "weird-(.*).txt",
+								Retainer: 1,
+							},
+						},
+					},
 				},
 			}
 
@@ -90,13 +99,17 @@ func testCleanerCommand(t *testing.T, when spec.G, it spec.S) {
 
 				outputStr := b.String()
 				lines := strings.Split(strings.TrimSpace(outputStr), "\n")
-				Expect(lines).To(HaveLen(6))
+				Expect(lines).To(HaveLen(9))
 				Expect(lines).To(ContainElement("Will delete: a/tile1-1.0.0-beta2.pivotal"))
 				Expect(lines).To(ContainElement("Will delete: a/tile1-1.0.0-beta1.pivotal"))
 				Expect(lines).To(ContainElement("Will delete: a/tile2-2.3.4.pivotal"))
 				Expect(lines).To(ContainElement("Will delete: a/tile2-2.3.5.pivotal"))
 				Expect(lines).To(ContainElement("Will delete: a/tile2-2.3.6.pivotal"))
 				Expect(lines).To(ContainElement("Will delete: c/foo-1.23.4.ova"))
+				Expect(lines).To(ContainElement("Will delete: busted/weird-1.2.3.txt"))
+				Expect(lines).To(ContainElement("Will delete: busted/weird-1.2.3-beta1.txt"))
+				Expect(lines).To(ContainElement("Will delete: busted/weird-2.4-build3.txt"))
+
 			})
 		})
 
@@ -175,4 +188,9 @@ func preseedFiles() {
 	c("b/sc-3498.5.tgz")
 	c("c/foo-1.23.4.ova")
 	c("c/foo.ova")
+	c("busted/weird-1.2.3.txt")
+	c("busted/weird-1.2.3-beta1.txt")
+	c("busted/weird-2.4-build3.txt")
+	c("busted/weird-3-rc1.txt")
+
 }

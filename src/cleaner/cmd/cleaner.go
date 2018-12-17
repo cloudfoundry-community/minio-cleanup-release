@@ -3,6 +3,7 @@ package cmd
 import (
 	"fmt"
 	"log"
+	"strings"
 
 	"os"
 	"os/signal"
@@ -113,7 +114,8 @@ func getFilesToDelete(cfg *CleanerConfig) ([]string, error) {
 		versions := make([]semver.Version, len(matchingFiles))
 		versionMap := make(map[string]string)
 		for i, mf := range matchingFiles {
-			v, err := semver.ParseTolerant(mf[0])
+
+			v, err := normalizeAndParse(mf[0])
 			if err != nil {
 				return nil, err
 			}
@@ -158,4 +160,35 @@ func walkDir(baseDir string, pattern *regexp.Regexp, files *[][2]string) filepat
 		}
 		return nil
 	}
+}
+
+func normalizeAndParse(v string) (semver.Version, error) {
+	// 2.3.1
+	// 2.3-build.194 (this is a bogus semver but we need to handle it anyway)
+
+	// try to parse using semver library
+	var ver semver.Version
+	var err error
+	if ver, err = semver.ParseTolerant(v); err == nil {
+		return ver, nil
+	}
+
+	if strings.Index(v, "-") > 0 {
+		parts := strings.SplitN(v, "-", 2)
+		semverParts := strings.Split(parts[0], ".")
+
+		normalized := ""
+		switch len(semverParts) {
+		case 1:
+			normalized = fmt.Sprintf("%s.0.0-%s", semverParts[0], parts[1])
+		case 2:
+			normalized = fmt.Sprintf("%s.%s.0-%s", semverParts[0], semverParts[1], parts[1])
+		default:
+			return semver.Version{}, err
+		}
+
+		return semver.ParseTolerant(normalized)
+	}
+
+	return semver.Version{}, err
 }

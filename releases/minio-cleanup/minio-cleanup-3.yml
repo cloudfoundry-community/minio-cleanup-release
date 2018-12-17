@@ -1,0 +1,25 @@
+name: minio-cleanup
+version: "3"
+commit_hash: 265b5c5
+uncommitted_changes: false
+jobs:
+- name: minio-cleaner
+  version: 159e2fc20f4df60ec1fc79b676d34622a08a799a
+  fingerprint: 159e2fc20f4df60ec1fc79b676d34622a08a799a
+  sha1: e6b20327552976b582bee2d71022c3c1df932034
+packages:
+- name: golang-1.11-linux
+  version: f4c35b6cbafb0d956c7de6cc6ae9146561b8962a
+  fingerprint: f4c35b6cbafb0d956c7de6cc6ae9146561b8962a
+  sha1: 9bf9c14e65dc3803f991b4276eeae661220c19c4
+  dependencies: []
+- name: minio-cleaner
+  version: 9fa7fb1a86d96e2acb551675e9242b6784d876de
+  fingerprint: 9fa7fb1a86d96e2acb551675e9242b6784d876de
+  sha1: d3079c32433db5feb04bfbca12b67fc9722d3fe7
+  dependencies:
+  - golang-1.11-linux
+license:
+  version: 0fbc9511a7e7f3a4d2f1af47f5ed327237b5f06c
+  fingerprint: 0fbc9511a7e7f3a4d2f1af47f5ed327237b5f06c
+  sha1: b83a45ba09a6ff783d28388cc83679787b9fc8a4
